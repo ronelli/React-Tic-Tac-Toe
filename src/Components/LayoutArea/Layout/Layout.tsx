@@ -7,12 +7,9 @@ import { Grid } from "@material-ui/core";
 
 
 function Layout(): JSX.Element {
-    const rootStyle = {
-        minHeight: '100vh'
-    };
     return (
         <>
-            <Grid container className="Layout Box" style={rootStyle}
+            <Grid container className="Layout Box"
                     direction="column"
                     justify="space-between"
                     alignItems="center"
