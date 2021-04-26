@@ -3,21 +3,25 @@ import Footer from "../Footer/Footer";
 import "./Layout.css";
 import Game from "../../BoardArea/Game/Game";
 import { Grid } from "@material-ui/core";
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
 function Layout(): JSX.Element {
+    const rootStyle = {
+        minHeight: '100vh'
+    };
     return (
         <>
-            <Grid container className="Layout Box"
-                    direction="column"
-                    justify="space-between"
-                    alignItems="center"
-            >
-                <Header />
-                    <main><Game /></main>
-                <Footer />
-            </Grid>
+                <Grid container className="Layout Box" style={rootStyle}
+                        direction="column"
+                        justify="space-between"
+                        alignItems="center"
+                >
+
+                    <Header />
+                        <main><Game /></main>
+                    <Footer />
+                </Grid>
         </>
     );
 }

@@ -1,5 +1,5 @@
 .board {
-    width: 814px;
+    min-width: 300px;
     margin: 2% 0;
     display: inline-grid;
     gap: 2px;
@@ -14,7 +14,6 @@
     position: relative;
     font-size: 100px;
     height: 150px;
-    /* justify-content: center; */
     align-items: center;
 }
 .newGameButton {
