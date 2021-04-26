@@ -12,16 +12,15 @@ function Layout(): JSX.Element {
     };
     return (
         <>
-            <div className="Layout Box" style={rootStyle} >
-                <Header />
-                <Grid container 
+            <Grid container className="Layout Box" style={rootStyle}
                     direction="column"
+                    justify="space-between"
                     alignItems="center"
-                >
+            >
+                <Header />
                     <main><Game /></main>
-                </Grid>
                 <Footer />
-            </div>
+            </Grid>
         </>
     );
 }

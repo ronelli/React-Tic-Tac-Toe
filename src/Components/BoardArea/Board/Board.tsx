@@ -165,7 +165,7 @@ class Board extends Component<{}, BoardState> {
             if(this.calcScore(this.state.computerMoves)){
                 setTimeout(() => {
                     this.setState({XisNext: false})
-                    alert("Computer Won");
+                    alert("Computer Win");
                 }, (1500));
             }
             else {
