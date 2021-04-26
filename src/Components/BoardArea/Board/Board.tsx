@@ -25,6 +25,7 @@ class Board extends Component<{}, BoardState> {
         [0, 4, 8], 
         [2, 4, 6]
     ];
+    private boardLock = false;
     private timerId = 0;
 
     public constructor(props: {}) {
@@ -86,7 +87,7 @@ class Board extends Component<{}, BoardState> {
             markedCellsArr: [...this.state.markedCellsArr, cellNumber],
             XisNext: true,
             computerMoves: [...this.state.computerMoves, cellNumber]});
-        window.setTimeout(() => {
+        return window.setTimeout(() => {
             this.state.computerMarkedCells[cellNumber] = "O";
             this.setState({
             XisNext: true
@@ -100,35 +101,44 @@ class Board extends Component<{}, BoardState> {
         }
         return false;
     }
-    private computerMove = async () => {
-        if(this.victoryOpportunity()){
-            this.computerPlay(this.state.selectedBlockingCell);
-        }
-        else if(this.checkBlockingUser()){
-            this.computerPlay(this.state.selectedBlockingCell);
-        }
-        else {
-            const randomElement = this.getRandomCell();
-            await this.setState({
+    private computerMove = () => {
+        return new Promise<void>((res, rej) => {
+            if(this.victoryOpportunity()){
+                this.computerPlay(this.state.selectedBlockingCell);
+                res();
+            }
+            else if(this.checkBlockingUser()){
+                this.computerPlay(this.state.selectedBlockingCell);
+                res();
+            }
+            else {
+                const randomElement = this.getRandomCell();
+                const last = () => window.setTimeout(() => {
+                    this.state.computerMarkedCells[randomElement] = "O";
+                    this.setState({
+                        XisNext: true
+                    }, () => res())
+                }, 1000);
+                this.setState({
                     markedCellsArr: [...this.state.markedCellsArr, randomElement],
                     XisNext: true,
-                    computerMoves: [...this.state.computerMoves, randomElement]});
-            window.setTimeout(() => {
-                this.state.computerMarkedCells[randomElement] = "O";
-                this.setState({
-                //     markedCellsArr: [...this.state.markedCellsArr, randomElement],
-                    XisNext: true
-                //     computerMoves: [...this.state.computerMoves, randomElement]
-                })
-            }, 1000);
-        }
+                    computerMoves: [...this.state.computerMoves, randomElement]
+                }, last);
+                
+            }
+        })
+
     }
 
     public nextMove = async (selectedCellByUser: number) => {
+        if(this.boardLock) {
+            return;
+        }
+        this.boardLock = true;
         if (!this.state.XisNext || this.state.markedCellsArr.includes(selectedCellByUser)) {
             return;
         }
-        await this.setState({XisNext: false}, ()=> console.log(this.state.XisNext));
+        await this.setState({XisNext: false});
         this.state.computerMarkedCells[selectedCellByUser] = "X";
         await this.setState({
             markedCellsArr: [...this.state.markedCellsArr, selectedCellByUser],
@@ -151,7 +161,7 @@ class Board extends Component<{}, BoardState> {
             return;
         }
         else {
-            this.computerMove();
+            this.computerMove().then(res => this.boardLock = false);
             if(this.calcScore(this.state.computerMoves)){
                 setTimeout(() => {
                     this.setState({XisNext: false})
@@ -184,6 +194,7 @@ class Board extends Component<{}, BoardState> {
     }
 
     private startNewGame = () => {
+        this.boardLock = false;
         this.setState({
             markedCellsArr: [],
             XisNext: true,
@@ -202,13 +213,12 @@ class Board extends Component<{}, BoardState> {
                     { [0, 1, 2, 3, 4, 5, 6, 7, 8].map(i =>
                         <div key={i} className="cell" onClick={() => this.nextMove(i)}>
                             <Cell cellId={i}
-                                computerMove={this.state.computerMarkedCells[i]} xIsNext={this.state.XisNext}/>
+                                computerMove={this.state.computerMarkedCells[i]}/>
                         </div>)
                     }
+                    <Button className="newGameButton" variant="contained" color="primary" onClick={() => this.startNewGame()}> Start new game
+                    </Button>
                 </div><hr />
-                
-                <Button variant="contained" color="primary" className="Game" onClick={() => this.startNewGame()}> Start new game
-                </Button>
             </>
         );
     }

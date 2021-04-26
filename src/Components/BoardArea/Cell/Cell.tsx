@@ -6,8 +6,7 @@ interface CellState {
 
 interface CellProps {
     computerMove?: string,
-    cellId: number,
-    xIsNext: boolean
+    cellId: number
 }
 class Cell extends Component<CellProps,CellState> {
     public constructor(props:CellProps){
@@ -23,7 +22,7 @@ class Cell extends Component<CellProps,CellState> {
 
     public render(): JSX.Element {
         return (
-            <div className="cell" onClick={this.drawSymbol} id={this.props.cellId.toString()}>
+            <div onClick={this.drawSymbol} id={this.props.cellId.toString()}>
                 {this.props.computerMove }
             </div>
         );

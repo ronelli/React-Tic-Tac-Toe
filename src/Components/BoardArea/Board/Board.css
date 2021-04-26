@@ -1,18 +1,22 @@
 .board {
+    width: 814px;
+    margin: 2% 0;
     display: inline-grid;
-    gap: 1px;
+    gap: 2px;
     grid-template-columns: repeat(3, 1fr);
 }
 
 .board > * {
-    padding: 10px;
     background-color: #ccc;
 }
 
-.cell {
-    font-size: 120px;
-    width: 270px;
+.cell > * {
+    position: relative;
+    font-size: 100px;
     height: 150px;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+}
+.newGameButton {
+    grid-column: 3 span;
 }

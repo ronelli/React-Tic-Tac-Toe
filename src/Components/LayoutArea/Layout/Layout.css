@@ -1,8 +1,16 @@
 .Layout {
     height: 100%;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
+    /* position: absolute; */
+    /* left: 0; */
+    /* width: 100%; */
+    /* overflow: hidden; */
+    display:grid;
+    grid-template-rows: 15% 75% 5%;
+    /* gap:1px; */
 	background-image: linear-gradient(30deg, rgb(240, 225, 240), rgb(80, 161, 175), rgb(240, 225, 240));
+}
+
+.Layout > * {
+
+    /* grid-column: span 1; */
 }

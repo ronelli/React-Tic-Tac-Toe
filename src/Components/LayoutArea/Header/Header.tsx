@@ -1,9 +1,9 @@
 import RandomWord from "../../HeaderArea/RandomWord/RandomWord";
-
+import "./Header.css";
 function Header(): JSX.Element {
     return (
-        <div className="Header Box">
-			<h1><RandomWord /></h1>
+        <div className="header Box">
+			<RandomWord />
         </div>
     );
 }
